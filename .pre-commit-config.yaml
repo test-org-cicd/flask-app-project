@@ -1,12 +1,10 @@
+exclude: (^static/ | ^templates/)
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.1.0
   hooks:
   -   id: end-of-file-fixer
-      exclude: ^static/
-      exclude: ^templates/
   -   id: trailing-whitespace
-      exclude: (^static/ | ^templates/)
 - repo: https://github.com/PyCQA/flake8
   rev: 4.0.1
   hooks:
