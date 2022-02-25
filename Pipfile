@@ -6,11 +6,15 @@ name = "pypi"
 [packages]
 flask = "*"
 environs = "*"
+supervisor = "*"
+gunicorn = "*"
+gevent = "*"
 
 [dev-packages]
 pytest = "*"
 pre-commit = "*"
 detect-secrets = "*"
+webtest = "*"
 
 [requires]
 python_version = "3.10"
