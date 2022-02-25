@@ -1,0 +1,2 @@
+ENV = "development"
+TESTING = True
