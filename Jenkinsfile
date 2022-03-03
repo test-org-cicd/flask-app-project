@@ -1,5 +1,3 @@
-def VERSION=''
-
 pipeline {
     agent {
         kubernetes {
@@ -94,18 +92,20 @@ pipeline {
         }
         stage('Deploy To Staging Using ArgoCD') {
             environment {
-                GIT_CREDS = credentials('github')
                 IMAGE_REPO='633324742710.dkr.ecr.us-east-1.amazonaws.com/flask-app-project'
-                GIT_URL='https://$GIT_CREDS_USR:$GIT_CREDS_PSW@github.com/test-org-cicd/flask-app-deploy.git'
             }
             steps {
                 container('argo-tools') {
-                    sh '''
-                        git clone $GIT_URL
-                        cd flask-app-deploy
-                        cd ./stage && kustomize edit set image $IMAGE_REPO:$VERSION
-                        git commit -am 'Publish new version' && git push $GIT_URL || echo 'no changes'
-                    '''
+                    withCredentials([string(credentialsId: 'github', variable: 'GIT_TOKEN')]) {
+                        sh '''
+                            VERSION=$(cat VERSION)
+                            GIT_URL=https://$GIT_TOKEN@github.com/test-org-cicd/flask-app-deploy.git
+                            git clone $GIT_URL
+                            cd flask-app-deploy
+                            cd ./stage && kustomize edit set image $IMAGE_REPO:$VERSION
+                            git commit -am 'Publish new version' && git push $GIT_URL || echo 'no changes'
+                        '''
+                    }
                 }
             }
         }
