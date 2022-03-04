@@ -84,7 +84,7 @@ pipeline {
             steps {
                 container('kaniko') {
                         sh """
-                            VERSION='\$(cat VERSION)'
+                            VERSION=\$(cat VERSION)
                             /kaniko/executor --context `pwd` --destination ${IMAGE_REPO}:\$VERSION
                         """
                 }
@@ -95,7 +95,7 @@ pipeline {
                 container('argo-tools') {
                     withCredentials([string(credentialsId: 'github', variable: 'GIT_TOKEN')]) {
                         sh """
-                            VERSION='\$(cat VERSION)'
+                            VERSION=\$(cat VERSION)
                             GIT_URL=https://${GIT_TOKEN}@github.com/test-org-cicd/flask-app-deploy.git
                             git clone ${GIT_URL}
                             cd flask-app-deploy
