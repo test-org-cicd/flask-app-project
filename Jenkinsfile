@@ -67,13 +67,13 @@ pipeline {
                     steps {
                         container('sonar-scanner-4-7') {
                             withSonarQubeEnv('Sonarqube') {
-                                sh '''
+                                sh """
                                     sonar-scanner \
                                         -Dsonar.projectKey=flask-app-sast \
                                         -Dsonar.sources=. \
                                         -Dsonar.host.url=${SONAR_HOST_URL} \
                                         -Dsonar.login=${SONAR_AUTH_TOKEN}
-                                '''
+                                """
                             }
                         }
                     }
@@ -83,28 +83,25 @@ pipeline {
         stage('Docker Image With Kaniko') {
             steps {
                 container('kaniko') {
-                        sh '''
+                        sh """
                             VERSION=$(cat VERSION)
-                            /kaniko/executor --context `pwd` --destination 633324742710.dkr.ecr.us-east-1.amazonaws.com/flask-app-project:$VERSION
-                        '''
+                            /kaniko/executor --context `pwd` --destination ${IMAGE_REPO}:${VERSION}
+                        """
                 }
             }
         }
         stage('Deploy To Staging Using ArgoCD') {
-            environment {
-                IMAGE_REPO='633324742710.dkr.ecr.us-east-1.amazonaws.com/flask-app-project'
-            }
             steps {
                 container('argo-tools') {
                     withCredentials([string(credentialsId: 'github', variable: 'GIT_TOKEN')]) {
-                        sh '''
+                        sh """
                             VERSION=$(cat VERSION)
-                            GIT_URL=https://$GIT_TOKEN@github.com/test-org-cicd/flask-app-deploy.git
-                            git clone $GIT_URL
+                            GIT_URL=https://${GIT_TOKEN}@github.com/test-org-cicd/flask-app-deploy.git
+                            git clone ${GIT_URL}
                             cd flask-app-deploy
-                            cd ./stage && kustomize edit set image $IMAGE_REPO:$VERSION
-                            git commit -am 'Publish new version' && git push $GIT_URL || echo 'no changes'
-                        '''
+                            cd ./stage && kustomize edit set image ${IMAGE_REPO}:${VERSION}
+                            git commit -am 'Publish new version' && git push ${GIT_URL} || echo 'no changes'
+                        """
                     }
                 }
             }
