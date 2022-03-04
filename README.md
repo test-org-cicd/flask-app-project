@@ -67,7 +67,10 @@ Now you can browse the application at `http://localhost:5000`
 
 For production deployment the CI/CD pipelin is being used. **Jenkins** is used to complete the CI(Continous Integration) process and for CD(Continuous Deployment) **ArgoCD** is being used.
 
-Jenkins steps
+**Jenkins steps**
+
+<p align="center"><img src="https://raw.githubusercontent.com/test-org-cicd/flask-app-project/main/docs/_static/flask-app-jenkins-pipeline.png" /></p>
+
 1. Build
     - Install all the pipenv dev dependencies
     - Run all pre-commit
