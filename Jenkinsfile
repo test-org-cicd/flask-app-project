@@ -84,7 +84,7 @@ pipeline {
             steps {
                 container('kaniko') {
                         sh """
-                            VERSION=\$(cat VERSION)
+                            VERSION='\$(cat VERSION)'
                             /kaniko/executor --context `pwd` --destination ${IMAGE_REPO}:${VERSION}
                         """
                 }
