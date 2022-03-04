@@ -84,6 +84,30 @@ For production deployment the CI/CD pipelin is being used. **Jenkins** is used t
 4. Deploy To Staging Using ArgoCD
     - In this stage it reads the `VERSION` file and update the kubernetes manifest file using [Kustomize](https://kustomize.io/) in the seperate git repo for this application at [https://github.com/test-org-cicd/flask-app-deploy](https://github.com/test-org-cicd/flask-app-deploy). This manifest repo is being monitored by **ArgoCD** for any changes and deploy to `Kubernetes` cluster accordingly.
 
+## SCREENSHOTS
+
+1. Dependency Track
+
+<p align="center"><img src="https://raw.githubusercontent.com/test-org-cicd/flask-app-project/main/docs/_static/flask-app-dt-1.png" /></p>
+
+---
+
+<p align="center"><img src="https://raw.githubusercontent.com/test-org-cicd/flask-app-project/main/docs/_static/flask-app-dt-2.png" /></p>
+
+---
+
+<p align="center"><img src="https://raw.githubusercontent.com/test-org-cicd/flask-app-project/main/docs/_static/flask-app-dt-3.png" /></p>
+
+2. Sonarqube
+
+<p align="center"><img src="https://raw.githubusercontent.com/test-org-cicd/flask-app-project/main/docs/_static/flask-app-sq.png" /></p>
+
+## EXPERIMENTAL
+
+Working on DefectDojo for the security posture of the application.
+
+<p align="center"><img src="https://raw.githubusercontent.com/test-org-cicd/flask-app-project/main/docs/_static/flask-app-defectdojo.png" /></p>
+
 ## LICENSE
 
 The Flask Application is GNU GPL3 licensed. See the LICENSE file for details.
