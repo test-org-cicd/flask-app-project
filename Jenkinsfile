@@ -85,7 +85,7 @@ pipeline {
                 container('kaniko') {
                         sh """
                             VERSION='\$(cat VERSION)'
-                            /kaniko/executor --context `pwd` --destination ${IMAGE_REPO}:${VERSION}
+                            /kaniko/executor --context `pwd` --destination ${IMAGE_REPO}:\$VERSION
                         """
                 }
             }
@@ -99,7 +99,7 @@ pipeline {
                             GIT_URL=https://${GIT_TOKEN}@github.com/test-org-cicd/flask-app-deploy.git
                             git clone ${GIT_URL}
                             cd flask-app-deploy
-                            cd ./stage && kustomize edit set image ${IMAGE_REPO}:${VERSION}
+                            cd ./stage && kustomize edit set image ${IMAGE_REPO}:\$VERSION
                             git commit -am 'Publish new version' && git push ${GIT_URL} || echo 'no changes'
                         """
                     }
