@@ -41,10 +41,10 @@ pytest -v
 
 ## Pre-commit Hook
 The application is using some pre-commit hooks for SAST, Secret Leak Protection, Style Guide and Linting. The tools used are:
-1. Bandit
-2. Detect-secrets
-3. Flake8
-4. Yapf
+1. [Bandit](https://bandit.readthedocs.io/en/latest/)
+2. [Detect-secrets](https://github.com/Yelp/detect-secrets)
+3. [Flake8](https://github.com/pycqa/flake8)
+4. [Yapf](https://github.com/google/yapf)
 
 To run all pre-commit type
 ```
