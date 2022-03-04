@@ -96,11 +96,11 @@ pipeline {
                     withCredentials([string(credentialsId: 'github', variable: 'GIT_TOKEN')]) {
                         sh """
                             VERSION=\$(cat VERSION)
-                            GIT_URL=https://${GIT_TOKEN}@github.com/test-org-cicd/flask-app-deploy.git
-                            git clone ${GIT_URL}
+                            GIT_URL=https://$GIT_TOKEN@github.com/test-org-cicd/flask-app-deploy.git
+                            git clone \$GIT_URL
                             cd flask-app-deploy
                             cd ./stage && kustomize edit set image ${IMAGE_REPO}:\$VERSION
-                            git commit -am 'Publish new version' && git push ${GIT_URL} || echo 'no changes'
+                            git commit -am 'Publish new version' && git push \$GIT_URL || echo 'no changes'
                         """
                     }
                 }
